@@ -43,7 +43,7 @@ On **Spur or Slurm managed compute**:
 - Use the managed cluster file produced from ``SPUR_NODES`` / HTTP agents.
   ATOM still uses the ``orch`` fixture and the config ``container`` block;
   do not add nested ``spur run`` inside ``AtomJob``.
-- Prove an existing single-node stem first, then run the ``mi355x_atom_*``
+- Prove an existing single-node stem first, then run the ``mi3xx_atom_*``
   stems (Kimi TP4, V4-Pro TP8). V4-Flash-Base stays on gfx942.
 
 Spur example:
@@ -99,15 +99,15 @@ stems use ``driver=atom``, ``lifetime: per_run``, and a writable
   PRO_DIR=~/input/config_file/inference/atom/pro355
   mkdir -p "$KIMI_DIR" "$PRO_DIR"
 
-  cvs config copy inference/atom/mi355x_atom_kimi-k27-code_mxfp4_single.json \
-    --output "$KIMI_DIR/mi355x_atom_kimi-k27-code_mxfp4_single.json"
-  cvs config copy inference/atom/mi355x_atom_kimi-k27-code_mxfp4_single_threshold.json \
-    --output "$KIMI_DIR/mi355x_atom_kimi-k27-code_mxfp4_single_threshold.json"
+  cvs config copy inference/atom/mi3xx_atom_kimi-k27-code_mxfp4_single.json \
+    --output "$KIMI_DIR/mi3xx_atom_kimi-k27-code_mxfp4_single.json"
+  cvs config copy inference/atom/mi325x_atom_kimi-k27-code_mxfp4_single_threshold.json \
+    --output "$KIMI_DIR/mi325x_atom_kimi-k27-code_mxfp4_single_threshold.json"
 
-  cvs config copy inference/atom/mi355x_atom_deepseek-v4-pro_single.json \
-    --output "$PRO_DIR/mi355x_atom_deepseek-v4-pro_single.json"
-  cvs config copy inference/atom/mi355x_atom_deepseek-v4-pro_single_threshold.json \
-    --output "$PRO_DIR/mi355x_atom_deepseek-v4-pro_single_threshold.json"
+  cvs config copy inference/atom/mi3xx_atom_deepseek-v4-pro_single.json \
+    --output "$PRO_DIR/mi3xx_atom_deepseek-v4-pro_single.json"
+  cvs config copy inference/atom/mi325x_atom_deepseek-v4-pro_single_threshold.json \
+    --output "$PRO_DIR/mi325x_atom_deepseek-v4-pro_single_threshold.json"
 
 In each copy set ``container.image``, the host side of the models volume,
 ``paths.shared_fs``, and ``model.id`` to the in-container weights path when
@@ -125,11 +125,11 @@ fails with ``docker exec None``.
     -N 1 --gpus-per-node 8 --exclusive -t 04:00:00 --mpi=none \
     bash -lc 'source ~/.cvs_venv/bin/activate &&
       cvs run atom \
-        --config_file ~/input/config_file/inference/atom/kimi355/mi355x_atom_kimi-k27-code_mxfp4_single.json \
+        --config_file ~/input/config_file/inference/atom/kimi355/mi3xx_atom_kimi-k27-code_mxfp4_single.json \
         --html ~/cvs_reports/atom_kimi.html --self-contained-html'
 
 Then the same command with
-``~/input/config_file/inference/atom/pro355/mi355x_atom_deepseek-v4-pro_single.json``
+``~/input/config_file/inference/atom/pro355/mi3xx_atom_deepseek-v4-pro_single.json``
 and ``atom_v4pro.html``.
 
 For **multinode PP** (``params.nnodes: 2``, ``pipeline_parallel_size: 2``):
