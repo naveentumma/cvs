@@ -88,7 +88,7 @@ still runs with ``cvs run atom``.
        ``HF_HUB_CACHE``; bring-up thresholds
    * - ``mi355x_atom_vllm_deepseek-v4-pro``
      - ``_single``
-     - vLLM parity for V4-Pro FP4 TP8; same 1K/1K and 128/32 cells; bring-up
+     - vLLM parity for V4-Pro FP4 TP8; fp8 KV cache and block size 256; same 1K/1K and 128/32 cells; bring-up
    * - ``mi355x_atom_deepseek-r1_fp8``
      - ``_single`` (``perf`` + ``mtp3``)
      - MI355X copy of the gfx942 R1 recipe; bring-up thresholds
