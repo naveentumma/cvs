@@ -1,8 +1,9 @@
 {
+  "gpu_arch": "mi355x",
   "schema_version": 2,
   "framework": "atom",
   "default_profile": "perf",
-  "threshold_json": "mi355x_atom_deepseek-r1_fp8_single_threshold.json",
+  "threshold_json": "mi325x_atom_qwen3.5-397b-a17b_fp8-gfx950_threshold.json",
   "paths": {
     "shared_fs": "/home/{user-id}",
     "models_dir": "/models",
@@ -10,7 +11,7 @@
     "hf_token_file": "{shared_fs}/.hf_token"
   },
   "model": {
-    "id": "deepseek-ai/DeepSeek-R1-0528",
+    "id": "amd/Qwen3.5-397B-A17B-FP8",
     "remote": 0,
     "precision": "fp8"
   },
@@ -44,8 +45,6 @@
           "atom_args": [
             "-tp",
             "8",
-            "--kv_cache_dtype",
-            "fp8",
             "--trust-remote-code"
           ],
           "env": {
@@ -61,7 +60,7 @@
         "tensor_parallelism": "8",
         "random_range_ratio": "0.8",
         "num_prompts": "1000",
-        "max_model_length": "4096",
+        "max_model_length": "12288",
         "metric_percentiles": "95,99",
         "reuse_server_across_sweep": "true",
         "client_poll_count": "80",
@@ -71,16 +70,11 @@
         "gpu_metrics_poll": true
       },
       "sweeps": {
-        "ISL=1024,OSL=1024,TP=8,PP=1,CONC=128": {},
-        "ISL=1024,OSL=1024,TP=8,PP=1,CONC=256": {},
+        "ISL=1024,OSL=8192,TP=8,PP=1,CONC=32": {},
+        "ISL=1024,OSL=8192,TP=8,PP=1,CONC=64": {},
         "ISL=128,OSL=32,TP=8,PP=1,CONC=1": {}
       },
       "runs": [],
-      "quant_parity": {
-        "enabled": true,
-        "probe_prompt": "The capital of France is",
-        "reference_config_stem": ""
-      },
       "functional": {
         "api_smoke": true,
         "health_check": true
@@ -92,24 +86,6 @@
             "task": "gsm8k",
             "num_fewshot": 5,
             "num_concurrent": 4
-          },
-          {
-            "id": "gsm8k_strict",
-            "task": "gsm8k",
-            "num_fewshot": 5,
-            "num_concurrent": 4,
-            "metadata": {
-              "filter": "strict-match"
-            }
-          },
-          {
-            "id": "gsm8k_stderr",
-            "task": "gsm8k",
-            "num_fewshot": 5,
-            "num_concurrent": 4,
-            "metadata": {
-              "filter": "flexible-extract"
-            }
           },
           {
             "id": "hellaswag",
@@ -179,8 +155,6 @@
           "atom_args": [
             "-tp",
             "8",
-            "--kv_cache_dtype",
-            "fp8",
             "--trust-remote-code",
             "--method",
             "mtp",
@@ -200,7 +174,7 @@
         "tensor_parallelism": "8",
         "random_range_ratio": "0.8",
         "num_prompts": "1000",
-        "max_model_length": "4096",
+        "max_model_length": "12288",
         "metric_percentiles": "95,99",
         "bench_extra_args": "--use-chat-template",
         "client_poll_count": "80",
@@ -212,8 +186,8 @@
         "chat_template_expected_sha256": ""
       },
       "sweeps": {
-        "ISL=1024,OSL=1024,TP=8,PP=1,CONC=128": {},
-        "ISL=1024,OSL=1024,TP=8,PP=1,CONC=256": {},
+        "ISL=1024,OSL=8192,TP=8,PP=1,CONC=32": {},
+        "ISL=1024,OSL=8192,TP=8,PP=1,CONC=64": {},
         "ISL=128,OSL=32,TP=8,PP=1,CONC=1": {}
       },
       "runs": [],
